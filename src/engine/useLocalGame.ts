@@ -59,7 +59,6 @@ export function useLocalGame(): UseGameEngine {
 
     const targetCard = cards.find((c) => c.id === cardId);
 
-    // Guard Clause 1: Validaciones de entrada
     if (!targetCard || targetCard.isFlipped || selectedCardIds.length >= 2) {
       return;
     }
@@ -70,7 +69,6 @@ export function useLocalGame(): UseGameEngine {
     );
     const newSelectedIds = [...selectedCardIds, cardId];
 
-    // Guard Clause 2: Si es apenas la primera carta, guardamos y salimos
     if (newSelectedIds.length < 2) {
       setGameState((prev) => ({
         ...prev,
@@ -112,14 +110,12 @@ export function useLocalGame(): UseGameEngine {
 
     // CASO 2: NO HUBO MATCH
 
-    // 1. Mostramos la 2da carta elegida momentáneamente
     setGameState((prev) => ({
       ...prev,
       cards: updatedCards,
       selectedCardIds: newSelectedIds,
     }));
 
-    // 2. Esperamos 1 segundo, desvolteamos y pasamos de turno
     setTimeout(() => {
       setGameState((prev) => {
         const nextPlayerId = calculateNextTurn(
